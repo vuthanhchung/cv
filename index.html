@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+</head>
+
+<body>
+    <style>
+        .selector {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            z-index: 2;
+            cursor: pointer;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .clickstatus,
+        .movestatus {
+            position: fixed;
+            z-index: 3;
+            bottom: 10px;
+            left: 10px;
+            background-color: red;
+            padding: 10px;
+            color: blue;
+        }
+
+        .movestatus {
+            left: auto;
+            right: 10px;
+            background-color: blue;
+            color: red;
+        }
+    </style>
+
+    <div class="selector"></div>
+
+    <div class="clickstatus"></div>
+    <div class="movestatus"></div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        var clicking = false,
+            y1 = 0, y2 = 0;
+
+        $(document).mousedown(function (e) {
+            clicking = true;
+            y1 = e.pageY;
+            // $('.clickstatus').append(e.pageY +' , ');
+        });
+
+        $(document).mouseup(function (e) {
+            clicking = false;
+
+            var screenHeight = $(window).height(),
+                moveWidth = $('.selector').css('bottom');
+            // x = number(screenHeight) * 2;
+            // console.log(parseInt(moveWidth) >= screenHeight * .2);
+            if (parseInt(moveWidth) >= screenHeight * .5) {
+                $('.selector').animate({'bottom':screenHeight},'slow');
+            } else {
+                $('.selector').animate({'top':0,'bottom': 0},'slow');
+            }
+            // $('.clickstatus').text(screenHeight*20%);
+
+            $('.movestatus').text(moveWidth);
+        })
+
+        $('.selector').mousemove(function (e) {
+            if (clicking === false) return;
+
+            // Mouse click + moving logic here
+            // $('.movestatus').text(e.pageY);
+            y2 = e.pageY;
+            // console.log(y1 - y2);
+            if((y1 - y2)>0) {
+                $('.selector').css({'top': 'auto','bottom': y1 - y2});
+            }
+        });
+    </script>
+</body>
+
+</html>
