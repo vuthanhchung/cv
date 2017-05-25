@@ -51,18 +51,20 @@
 
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
     <script>
         var clicking = false,
             y1 = 0, y2 = 0;
 
-        $(document).mousedown(function (e) {
+        $(document).on('vmousedown', function (e) {
             clicking = true;
             y1 = e.pageY;
             // $('.clickstatus').append(e.pageY +' , ');
         });
 
-        $(document).mouseup(function (e) {
+        $(document).on('vmouseup', function (e) {
             clicking = false;
 
             var screenHeight = $(window).height(),
@@ -70,24 +72,24 @@
             // x = number(screenHeight) * 2;
             // console.log(parseInt(moveWidth) >= screenHeight * .2);
             if (parseInt(moveWidth) >= screenHeight * .5) {
-                $('.selector').animate({'bottom':screenHeight},'slow');
+                $('.selector').animate({ 'bottom': screenHeight }, 'slow');
             } else {
-                $('.selector').animate({'top':0,'bottom': 0},'slow');
+                $('.selector').animate({ 'top': 0, 'bottom': 0 }, 'slow');
             }
             // $('.clickstatus').text(screenHeight*20%);
 
             $('.movestatus').text(moveWidth);
         })
 
-        $('.selector').mousemove(function (e) {
+        $('.selector').on('vmousemove', function (e) {
             if (clicking === false) return;
 
             // Mouse click + moving logic here
             // $('.movestatus').text(e.pageY);
             y2 = e.pageY;
             // console.log(y1 - y2);
-            if((y1 - y2)>0) {
-                $('.selector').css({'top': 'auto','bottom': y1 - y2});
+            if ((y1 - y2) > 0) {
+                $('.selector').css({ 'top': 'auto', 'bottom': y1 - y2 });
             }
         });
     </script>
