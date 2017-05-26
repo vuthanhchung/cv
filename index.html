@@ -42,52 +42,82 @@
             background-color: blue;
             color: red;
         }
+
+        .detail {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        .desc {
+            text-align: center;
+        }
     </style>
 
-    <div class="selector"></div>
-
-    <div class="clickstatus"></div>
-    <div class="movestatus"></div>
+    <div class="selector">
+        <div class="detail">
+            <div class="img">
+                <img class="" src="" alt="" />
+            </div>
+            <div class="desc">
+                Chung Vu
+            </div>
+        </div>
+    </div>
 
 
 
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
     <script>
         var clicking = false,
             y1 = 0, y2 = 0;
 
-        $(document).on('vmousedown', function (e) {
+        var pointerEventToXY = function (e) {
+            var out = { x: 0, y: 0 };
+            if (e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel') {
+                var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                out.x = touch.pageX;
+                out.y = touch.pageY;
+            } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover' || e.type == 'mouseout' || e.type == 'mouseenter' || e.type == 'mouseleave') {
+                out.x = e.pageX;
+                out.y = e.pageY;
+            }
+            return out;
+        };
+
+        $(document).on('mousedown touchstart', function (e) {
+            var page = new pointerEventToXY(e);
             clicking = true;
-            y1 = e.pageY;
-            // $('.clickstatus').append(e.pageY +' , ');
+            y1 = page.y;
         });
 
-        $(document).on('vmouseup', function (e) {
+        $(document).on('mouseup touchend', function (e) {
             clicking = false;
 
             var screenHeight = $(window).height(),
                 moveWidth = $('.selector').css('bottom');
-            // x = number(screenHeight) * 2;
-            // console.log(parseInt(moveWidth) >= screenHeight * .2);
             if (parseInt(moveWidth) >= screenHeight * .5) {
                 $('.selector').animate({ 'bottom': screenHeight }, 'slow');
             } else {
                 $('.selector').animate({ 'top': 0, 'bottom': 0 }, 'slow');
             }
-            // $('.clickstatus').text(screenHeight*20%);
-
-            $('.movestatus').text(moveWidth);
         })
 
-        $('.selector').on('vmousemove', function (e) {
+        $('.selector').on('mousemove touchmove', function (e) {
             if (clicking === false) return;
 
-            // Mouse click + moving logic here
-            // $('.movestatus').text(e.pageY);
-            y2 = e.pageY;
-            // console.log(y1 - y2);
+            var page = new pointerEventToXY(e);
+            
+            y2 = page.y;
             if ((y1 - y2) > 0) {
                 $('.selector').css({ 'top': 'auto', 'bottom': y1 - y2 });
             }
