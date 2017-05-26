@@ -1,0 +1,48 @@
+.selector {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    z-index: 2;
+    cursor: pointer;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.clickstatus,
+.movestatus {
+    position: fixed;
+    z-index: 3;
+    bottom: 10px;
+    left: 10px;
+    background-color: red;
+    padding: 10px;
+    color: blue;
+}
+
+.movestatus {
+    left: auto;
+    right: 10px;
+    background-color: blue;
+    color: red;
+}
+
+.detail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.desc {
+    text-align: center;
+}

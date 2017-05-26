@@ -6,61 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
-
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 
 <body>
-    <style>
-        .selector {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background-color: #ccc;
-            z-index: 2;
-            cursor: pointer;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-        }
-
-        .clickstatus,
-        .movestatus {
-            position: fixed;
-            z-index: 3;
-            bottom: 10px;
-            left: 10px;
-            background-color: red;
-            padding: 10px;
-            color: blue;
-        }
-
-        .movestatus {
-            left: auto;
-            right: 10px;
-            background-color: blue;
-            color: red;
-        }
-
-        .detail {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background-color: red;
-        }
-
-        .desc {
-            text-align: center;
-        }
-    </style>
 
     <div class="selector">
         <div class="detail">
@@ -74,55 +23,8 @@
     </div>
 
 
-
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-    <script>
-        var clicking = false,
-            y1 = 0, y2 = 0;
-
-        var pointerEventToXY = function (e) {
-            var out = { x: 0, y: 0 };
-            if (e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel') {
-                var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-                out.x = touch.pageX;
-                out.y = touch.pageY;
-            } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover' || e.type == 'mouseout' || e.type == 'mouseenter' || e.type == 'mouseleave') {
-                out.x = e.pageX;
-                out.y = e.pageY;
-            }
-            return out;
-        };
-
-        $(document).on('mousedown touchstart', function (e) {
-            var page = new pointerEventToXY(e);
-            clicking = true;
-            y1 = page.y;
-        });
-
-        $(document).on('mouseup touchend', function (e) {
-            clicking = false;
-
-            var screenHeight = $(window).height(),
-                moveWidth = $('.selector').css('bottom');
-            if (parseInt(moveWidth) >= screenHeight * .5) {
-                $('.selector').animate({ 'bottom': screenHeight }, 'slow');
-            } else {
-                $('.selector').animate({ 'top': 0, 'bottom': 0 }, 'slow');
-            }
-        })
-
-        $('.selector').on('mousemove touchmove', function (e) {
-            if (clicking === false) return;
-
-            var page = new pointerEventToXY(e);
-            
-            y2 = page.y;
-            if ((y1 - y2) > 0) {
-                $('.selector').css({ 'top': 'auto', 'bottom': y1 - y2 });
-            }
-        });
-    </script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/js.js"></script>
 </body>
 
 </html>
